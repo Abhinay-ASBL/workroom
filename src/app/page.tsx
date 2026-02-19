@@ -96,17 +96,19 @@ export default function Home() {
 
           {/* Category Chips from DB */}
           <div className="absolute left-0 right-0 mx-auto h-[32px] w-full max-w-[1068px]" style={{ top: '411px' }}>
-            <div className="absolute left-0 top-0 h-[32px] w-[calc(100%-50px)] overflow-clip">
+            <div className="absolute left-0 top-0 h-[32px] w-[calc(100%-50px)] overflow-hidden">
               <div className="flex items-center h-full">
                 {categories.map((cat, index) => (
                   <div key={cat.id} className="flex items-center h-full">
                     <button className="flex items-center justify-center px-[10px] py-[6px] whitespace-nowrap">
-                      <span className="text-[17px] font-normal text-black text-center tracking-[0.1px] leading-[20px]" style={{ fontFamily: "'Roboto', sans-serif", fontVariationSettings: "'wdth' 100", ...(index === categories.length - 1 && { backgroundImage: 'linear-gradient(269.69deg, rgba(0, 0, 0, 0) 2.13%, rgb(0, 0, 0) 99.95%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }) }}>{cat.name}</span>
+                      <span className="text-[17px] font-normal text-black text-center tracking-[0.1px] leading-[20px]" style={{ fontFamily: "'Roboto', sans-serif", fontVariationSettings: "'wdth' 100" }}>{cat.name}</span>
                     </button>
                     {index < categories.length - 1 && <div className="w-[1px] h-[15px] bg-black/30" />}
                   </div>
                 ))}
               </div>
+              {/* Gradient fade on right edge — prevents hard mid-word clip */}
+              <div className="pointer-events-none absolute right-0 top-0 h-full w-[60px]" style={{ background: 'linear-gradient(to right, transparent, rgba(255,255,255,1))' }} />
             </div>
             <div className="absolute right-[-12px] top-[2px] flex items-center justify-center h-[27px] px-[8px] py-[6px]">
               <span className="text-[15px] font-medium text-[#0061ff] text-center tracking-[0.1px] leading-[20px] underline underline-offset-2" style={{ fontFamily: "'Roboto', sans-serif", fontVariationSettings: "'wdth' 100" }}>more</span>
