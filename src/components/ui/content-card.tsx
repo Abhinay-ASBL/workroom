@@ -186,29 +186,29 @@ const ContentCard = React.forwardRef<HTMLDivElement, ContentCardProps>(
           </button>
         </div>
 
-        {/* Title - responsive font and positioning */}
-        <p
-          className="absolute left-[16px] sm:left-[20px] lg:left-[25px] top-[36px] sm:top-[40px] lg:top-[43px] right-[50px] sm:right-[60px] text-[18px] sm:text-[20px] lg:text-[24px] font-medium leading-normal text-white"
-          style={{
-            fontFamily: "'Roboto', sans-serif",
-            fontVariationSettings: "'wdth' 100",
-          }}
-        >
-          {title}
-        </p>
-
-        {/* Subtitle (optional) - responsive */}
-        {subtitle && (
+        {/* Title + Subtitle — stacked so subtitle never overlaps title */}
+        <div className="absolute left-[16px] sm:left-[20px] lg:left-[25px] top-[36px] sm:top-[40px] lg:top-[43px] right-[50px] sm:right-[60px]">
           <p
-            className="absolute left-[16px] sm:left-[20px] lg:left-[25px] top-[62px] sm:top-[68px] lg:top-[75px] right-[16px] text-[14px] sm:text-[15px] lg:text-[16px] font-normal leading-normal text-white/80"
+            className="text-[18px] sm:text-[20px] lg:text-[22px] font-medium leading-[1.3] text-white line-clamp-2"
             style={{
               fontFamily: "'Roboto', sans-serif",
               fontVariationSettings: "'wdth' 100",
             }}
           >
-            {subtitle}
+            {title}
           </p>
-        )}
+          {subtitle && (
+            <p
+              className="text-[12px] sm:text-[13px] lg:text-[14px] font-normal text-white/70 mt-[5px] line-clamp-1"
+              style={{
+                fontFamily: "'Roboto', sans-serif",
+                fontVariationSettings: "'wdth' 100",
+              }}
+            >
+              {subtitle}
+            </p>
+          )}
+        </div>
 
         {/* Description (for dark variant) */}
         {description && variant === 'dark' && (

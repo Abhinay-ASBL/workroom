@@ -146,9 +146,19 @@ export default function ProjectDetailPage() {
             </div>
           </section>
 
-          {/* Image Placeholder 1 */}
+          {/* Feature Image */}
           <section className="px-4 sm:px-6 md:px-12 lg:px-[80px] xl:px-[0px] py-12 lg:py-[80px]">
-            <div className="w-full h-[300px] sm:h-[400px] lg:h-[535px] bg-[#d7d7d7] rounded-lg" />
+            <div className="relative w-full h-[300px] sm:h-[400px] lg:h-[535px] rounded-lg overflow-hidden bg-[#1a1a1a]">
+              {project.image_url && (
+                <Image
+                  src={project.image_url}
+                  alt={project.title}
+                  fill
+                  className="object-cover opacity-90"
+                />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20" />
+            </div>
           </section>
 
           {/* Problem Section */}
@@ -192,8 +202,17 @@ export default function ProjectDetailPage() {
           {/* Solution Section */}
           {getSection('solution') && (
             <section id="solution" className="px-4 sm:px-6 md:px-12 lg:px-[80px] xl:px-[0px] pb-12 lg:pb-[80px]">
-              <div className="relative w-full h-[500px] sm:h-[600px] lg:h-[744px] bg-[#d7d7d7] overflow-hidden">
-                <div className="absolute left-[20px] sm:left-[49px] bottom-[20px] sm:bottom-[50px] w-[calc(100%-40px)] sm:w-[536px] h-auto sm:h-[270px] bg-white rounded-[28px] p-6 sm:px-[47px] sm:py-[37px]">
+              <div className="relative w-full h-[500px] sm:h-[600px] lg:h-[744px] rounded-lg overflow-hidden bg-[#1a1a1a]">
+                {project.image_url && (
+                  <Image
+                    src={project.image_url}
+                    alt={project.title}
+                    fill
+                    className="object-cover opacity-60"
+                  />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/60" />
+                <div className="absolute left-[20px] sm:left-[49px] bottom-[20px] sm:bottom-[50px] w-[calc(100%-40px)] sm:w-[536px] max-h-[calc(100%-40px)] sm:max-h-[calc(100%-70px)] overflow-y-auto bg-white rounded-[28px] p-6 sm:px-[47px] sm:py-[37px]">
                   <h3 className="text-[18px] sm:text-[22.403px] font-medium text-black mb-3" style={{ fontFamily: "'Roboto', sans-serif", fontVariationSettings: "'wdth' 100" }}>{getSection('solution')!.heading}</h3>
                   <p className="text-[14px] sm:text-[17px] font-normal text-black leading-relaxed" style={{ fontFamily: "'Roboto', sans-serif", fontVariationSettings: "'wdth' 100" }}>{getSection('solution')!.content}</p>
                 </div>
@@ -205,8 +224,20 @@ export default function ProjectDetailPage() {
           <section className="px-4 sm:px-6 md:px-12 lg:px-[80px] xl:px-[0px] pb-12 lg:pb-[80px]">
             <div className="relative">
               <div className="flex gap-4 sm:gap-6 lg:gap-[63px] overflow-hidden">
-                <div className="flex-shrink-0 w-full sm:w-[60%] lg:w-[811px] h-[300px] sm:h-[400px] lg:h-[491px] bg-[#d9d9d9]" />
-                <div className="hidden sm:block flex-shrink-0 sm:w-[35%] lg:w-[504px] h-[300px] sm:h-[400px] lg:h-[491px] bg-[#d9d9d9]" />
+                {/* Main slide */}
+                <div className="relative flex-shrink-0 w-full sm:w-[60%] lg:w-[811px] h-[300px] sm:h-[400px] lg:h-[491px] rounded-lg overflow-hidden bg-[#1a1a1a]">
+                  {project.image_url && (
+                    <Image src={project.image_url} alt={project.title} fill className="object-cover opacity-80" />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent" />
+                </div>
+                {/* Peek slide */}
+                <div className="relative hidden sm:block flex-shrink-0 sm:w-[35%] lg:w-[504px] h-[300px] sm:h-[400px] lg:h-[491px] rounded-lg overflow-hidden bg-[#1a1a1a]">
+                  {project.image_url && (
+                    <Image src={project.image_url} alt={project.title} fill className="object-cover opacity-60 scale-105" style={{ objectPosition: '70% center' }} />
+                  )}
+                  <div className="absolute inset-0 bg-black/30" />
+                </div>
               </div>
               <div className="flex items-center justify-center gap-[6px] mt-4">
                 {Array.from({ length: TOTAL_SLIDES }).map((_, i) => (
