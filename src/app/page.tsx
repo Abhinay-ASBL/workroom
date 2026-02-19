@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { FilterTabs } from '@/components/ui/filter-tabs';
 import { ContentCard } from '@/components/ui/content-card';
@@ -22,11 +23,17 @@ const STRIPE_POSITIONS = [
 ];
 
 export default function Home() {
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('recents');
   const [projects, setProjects] = useState<Project[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const handleSearchSubmit = () => {
+    if (searchQuery.trim()) router.push(`/projects?q=${encodeURIComponent(searchQuery.trim())}`);
+    else router.push('/projects');
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -86,9 +93,9 @@ export default function Home() {
                 <div className="w-[24px] h-[24px] flex-shrink-0">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="#4a4a4a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 </div>
-                <input type="text" placeholder="Search anything..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="bg-transparent border-none outline-none text-[15px] text-[#4a4a4a] font-normal leading-[20px] placeholder:text-[#4a4a4a] flex-1 min-w-0" style={{ fontFamily: "'Roboto', sans-serif", fontVariationSettings: "'wdth' 100" }} />
+                <input type="text" placeholder="Search anything..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleSearchSubmit()} className="bg-transparent border-none outline-none text-[15px] text-[#4a4a4a] font-normal leading-[20px] placeholder:text-[#4a4a4a] flex-1 min-w-0" style={{ fontFamily: "'Roboto', sans-serif", fontVariationSettings: "'wdth' 100" }} />
               </div>
-              <button className="flex items-center justify-center w-[75px] h-[46px] rounded-[42px] border-2 border-solid border-white overflow-clip cursor-pointer shrink-0" style={{ backgroundImage: 'linear-gradient(107.28deg, rgb(255, 255, 255) 12.404%, rgb(241, 241, 241) 95.297%)', boxShadow: '0px 0px 5px -1px rgba(46, 40, 80, 0.56)' }}>
+              <button onClick={handleSearchSubmit} className="flex items-center justify-center w-[75px] h-[46px] rounded-[42px] border-2 border-solid border-white overflow-clip cursor-pointer shrink-0" style={{ backgroundImage: 'linear-gradient(107.28deg, rgb(255, 255, 255) 12.404%, rgb(241, 241, 241) 95.297%)', boxShadow: '0px 0px 5px -1px rgba(46, 40, 80, 0.56)' }}>
                 <svg width="19" height="13" viewBox="0 0 19 13" fill="none"><path d="M0 1H19M3 6.5H16M6 12H13" stroke="black" strokeWidth="1.5" strokeLinecap="round" /></svg>
               </button>
             </div>
@@ -100,7 +107,7 @@ export default function Home() {
               <div className="flex items-center h-full">
                 {categories.map((cat, index) => (
                   <div key={cat.id} className="flex items-center h-full">
-                    <button className="flex items-center justify-center px-[10px] py-[6px] whitespace-nowrap">
+                    <button onClick={() => document.getElementById('browse-section')?.scrollIntoView({ behavior: 'smooth' })} className="flex items-center justify-center px-[10px] py-[6px] whitespace-nowrap">
                       <span className="text-[17px] font-normal text-black text-center tracking-[0.1px] leading-[20px]" style={{ fontFamily: "'Roboto', sans-serif", fontVariationSettings: "'wdth' 100" }}>{cat.name}</span>
                     </button>
                     {index < categories.length - 1 && <div className="w-[1px] h-[15px] bg-black/30" />}
@@ -124,9 +131,9 @@ export default function Home() {
             <div className="flex items-center justify-between h-full px-3 sm:px-5 md:px-6 lg:px-[33px] py-2 rounded-[42px]" style={{ background: 'rgba(255, 255, 255, 0.05)' }}>
               <div className="flex items-center gap-2 sm:gap-3 flex-1">
                 <svg className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 flex-shrink-0" viewBox="0 0 24 24" fill="none"><path d="M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="#4a4a4a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                <input type="text" placeholder="Search anything..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="bg-transparent border-none outline-none text-[12px] sm:text-[13px] md:text-[14px] lg:text-[15px] text-[#4a4a4a] font-normal leading-[20px] placeholder:text-[#4a4a4a] flex-1 min-w-0" style={{ fontFamily: "'Roboto', sans-serif", fontVariationSettings: "'wdth' 100" }} />
+                <input type="text" placeholder="Search anything..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleSearchSubmit()} className="bg-transparent border-none outline-none text-[12px] sm:text-[13px] md:text-[14px] lg:text-[15px] text-[#4a4a4a] font-normal leading-[20px] placeholder:text-[#4a4a4a] flex-1 min-w-0" style={{ fontFamily: "'Roboto', sans-serif", fontVariationSettings: "'wdth' 100" }} />
               </div>
-              <button className="flex items-center justify-center w-[44px] sm:w-[55px] md:w-[65px] lg:w-[75px] h-[32px] sm:h-[36px] md:h-[42px] lg:h-[46px] rounded-[32px] sm:rounded-[36px] md:rounded-[40px] lg:rounded-[42px] border-2 border-white overflow-hidden cursor-pointer flex-shrink-0" style={{ backgroundImage: 'linear-gradient(107.28deg, rgb(255, 255, 255) 12.4%, rgb(241, 241, 241) 95.3%)', boxShadow: '0px 0px 5px -1px rgba(46, 40, 80, 0.56)' }}>
+              <button onClick={handleSearchSubmit} className="flex items-center justify-center w-[44px] sm:w-[55px] md:w-[65px] lg:w-[75px] h-[32px] sm:h-[36px] md:h-[42px] lg:h-[46px] rounded-[32px] sm:rounded-[36px] md:rounded-[40px] lg:rounded-[42px] border-2 border-white overflow-hidden cursor-pointer flex-shrink-0" style={{ backgroundImage: 'linear-gradient(107.28deg, rgb(255, 255, 255) 12.4%, rgb(241, 241, 241) 95.3%)', boxShadow: '0px 0px 5px -1px rgba(46, 40, 80, 0.56)' }}>
                 <svg className="w-3 h-2 sm:w-4 sm:h-3 md:w-[18px] md:h-[12px]" viewBox="0 0 19 13" fill="none"><path d="M0 1H19M3 6.5H16M6 12H13" stroke="black" strokeWidth="1.5" strokeLinecap="round" /></svg>
               </button>
             </div>
@@ -135,7 +142,7 @@ export default function Home() {
             <div className="flex items-center h-full">
               {categories.map((cat, index) => (
                 <div key={cat.id} className="flex items-center h-full">
-                  <button className="flex items-center justify-center px-[6px] sm:px-2 md:px-[10px] py-1 whitespace-nowrap">
+                  <button onClick={() => document.getElementById('browse-section')?.scrollIntoView({ behavior: 'smooth' })} className="flex items-center justify-center px-[6px] sm:px-2 md:px-[10px] py-1 whitespace-nowrap">
                     <span className="text-[11px] sm:text-[13px] md:text-[15px] lg:text-[17px] font-normal text-black text-center tracking-[0.1px] leading-[18px] sm:leading-[20px]" style={{ fontFamily: "'Roboto', sans-serif", fontVariationSettings: "'wdth' 100" }}>{cat.name}</span>
                   </button>
                   {index < categories.length - 1 && <div className="w-[1px] h-[12px] sm:h-[14px] md:h-[15px] bg-black/30" />}
@@ -147,7 +154,7 @@ export default function Home() {
       </section>
 
       {/* Browse By Section */}
-      <section className="pt-[50px] sm:pt-[60px] lg:pt-[75px] pb-8 sm:pb-10 lg:pb-[69px] px-4 sm:px-6 md:px-12 lg:px-[80px] xl:px-[175px]">
+      <section id="browse-section" className="pt-[50px] sm:pt-[60px] lg:pt-[75px] pb-8 sm:pb-10 lg:pb-[69px] px-4 sm:px-6 md:px-12 lg:px-[80px] xl:px-[175px]">
         <div className="max-w-[1378px] mx-auto">
           <div className="flex items-center justify-between mb-4 sm:mb-6 lg:mb-[20px]">
             <h2 className="text-[24px] sm:text-[28px] lg:text-[32px] font-medium text-[#222] leading-[32px] sm:leading-[36px] lg:leading-[40px]" style={{ fontFamily: "'Roboto', sans-serif", fontVariationSettings: "'wdth' 100" }}>Browse by</h2>

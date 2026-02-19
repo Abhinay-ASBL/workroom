@@ -138,16 +138,16 @@ export function Footer() {
 
           {/* Social Links - Figma node I1:643;1:702 */}
           <div className="flex items-center gap-6 sm:gap-8 md:gap-10 lg:gap-[39px]">
-            <a href="#" className="hover:opacity-80 transition-opacity" aria-label="X">
+            <a href="#" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity" aria-label="X">
               <XIcon className="h-5 w-5 sm:h-[22px] sm:w-[22px] md:h-6 md:w-6" />
             </a>
-            <a href="#" className="hover:opacity-80 transition-opacity" aria-label="YouTube">
+            <a href="#" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity" aria-label="YouTube">
               <YouTubeIcon className="h-5 w-5 sm:h-[22px] sm:w-[22px] md:h-6 md:w-6" />
             </a>
-            <a href="#" className="hover:opacity-80 transition-opacity" aria-label="LinkedIn">
+            <a href="#" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity" aria-label="LinkedIn">
               <LinkedInIcon className="h-5 w-5 sm:h-[22px] sm:w-[22px] md:h-6 md:w-6" />
             </a>
-            <a href="#" className="hover:opacity-80 transition-opacity" aria-label="Instagram">
+            <a href="#" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity" aria-label="Instagram">
               <InstagramIcon className="h-5 w-5 sm:h-[22px] sm:w-[22px] md:h-6 md:w-6" />
             </a>
           </div>

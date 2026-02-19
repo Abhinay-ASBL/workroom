@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { FilterTabs } from '@/components/ui/filter-tabs';
 import { ContentCard } from '@/components/ui/content-card';
 import { ActiveFiltersBar } from '@/components/ui/active-filter-tag';
@@ -18,12 +19,8 @@ const FILTER_TABS = [
 ];
 
 const FILTER_CATEGORIES = [
-  'Reality Trends',
-  'Space Design',
-  'Document',
-  'Market Analysis',
-  'Interior',
-  'Construction',
+  'Real Estate', 'Urban Planning', 'Finance', 'Construction',
+  'Technology', 'Sustainability', 'Housing', 'Commercial',
 ];
 
 const STRIPE_POSITIONS = [
@@ -32,12 +29,18 @@ const STRIPE_POSITIONS = [
 ];
 
 export default function ProjectsPage() {
+  const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState('recents');
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const q = searchParams.get('q');
+    if (q) setSearchQuery(q);
+  }, [searchParams]);
 
   useEffect(() => {
     async function fetchProjects() {
@@ -59,7 +62,11 @@ export default function ProjectsPage() {
     }
 
     if (activeFilters.length > 0) {
-      cards = cards.filter(p => activeFilters.some(f => p.tags.includes(f)));
+      cards = cards.filter(p =>
+        activeFilters.some(f =>
+          p.tags.some(t => t.toLowerCase().replace(/-/g, ' ') === f.toLowerCase())
+        )
+      );
     }
 
     if (searchQuery.trim()) {

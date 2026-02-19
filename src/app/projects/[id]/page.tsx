@@ -57,6 +57,23 @@ export default function ProjectDetailPage() {
     fetchData();
   }, [slug]);
 
+  useEffect(() => {
+    if (loading || !project) return;
+    const sectionIds = ['overview', 'problem', 'research', 'solution'];
+    const observers: IntersectionObserver[] = [];
+    sectionIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => { if (entry.isIntersecting) setActiveSection(id); },
+        { rootMargin: '-10% 0px -70% 0px', threshold: 0 }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+    return () => observers.forEach(o => o.disconnect());
+  }, [loading, project]);
+
   const handleSectionClick = (id: string) => {
     setActiveSection(id);
     const el = document.getElementById(id);
@@ -137,10 +154,14 @@ export default function ProjectDetailPage() {
               <h1 className="text-[36px] sm:text-[48px] lg:text-[64px] font-medium text-black leading-[1.1] mb-6" style={{ fontFamily: "'Roboto', sans-serif", fontVariationSettings: "'wdth' 100" }}>{project.title}</h1>
               <p className="text-[15px] sm:text-[17px] font-medium text-black leading-relaxed mb-6 max-w-[570px]" style={{ fontFamily: "'Roboto', sans-serif", fontVariationSettings: "'wdth' 100" }}>{project.description}</p>
               <div className="flex items-center gap-3">
-                <div className="w-[60px] h-[60px] rounded-full bg-[#bebebe] flex-shrink-0" />
+                <div className="w-[60px] h-[60px] rounded-full bg-[#524DF6]/10 flex-shrink-0 flex items-center justify-center">
+                  <span className="text-[22px] font-semibold text-[#524DF6]" style={{ fontFamily: "'Roboto', sans-serif" }}>
+                    {project.author_name ? project.author_name.charAt(0).toUpperCase() : 'A'}
+                  </span>
+                </div>
                 <div>
                   <p className="text-[20px] sm:text-[24px] font-medium text-black" style={{ fontFamily: "'Roboto', sans-serif", fontVariationSettings: "'wdth' 100" }}>{project.author_name}</p>
-                  <p className="text-[15px] sm:text-[17px] font-medium text-black" style={{ fontFamily: "'Roboto', sans-serif", fontVariationSettings: "'wdth' 100" }}>{project.author_role}</p>
+                  <p className="text-[15px] sm:text-[17px] font-medium text-black/60" style={{ fontFamily: "'Roboto', sans-serif", fontVariationSettings: "'wdth' 100" }}>{project.author_role}</p>
                 </div>
               </div>
             </div>

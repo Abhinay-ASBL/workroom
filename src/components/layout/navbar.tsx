@@ -34,11 +34,8 @@ const mobileNavItems = [
 ];
 
 // Mock data
-const mockUser = { name: 'John Doe', email: 'john@asbl.com' };
-const mockNotifications = [
-  { id: '1', title: 'New article published', time: '5 min ago' },
-  { id: '2', title: 'Comment on your article', time: '1 hour ago' },
-];
+const mockUser = { name: 'ASBL Member', email: '' };
+const mockNotifications: { id: string; title: string; time: string }[] = [];
 
 // Bell Icon - Figma node 1:1505 (Property 1=bell)
 function BellIcon({ className }: { className?: string }) {
@@ -238,7 +235,7 @@ export function Navbar() {
                 >
                   <div className="px-2 py-2">
                     <p className="text-sm font-medium text-white">{mockUser.name}</p>
-                    <p className="text-xs text-gray-400">{mockUser.email}</p>
+                    {mockUser.email && <p className="text-xs text-gray-400">{mockUser.email}</p>}
                   </div>
                   <DropdownMenuSeparator className="bg-gray-700" />
                   <DropdownMenuItem
