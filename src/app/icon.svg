@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Diagonal parallelogram strips forming angular W-mark, matching brand purple -->
+  <!-- Strip 1 (leftmost) -->
+  <polygon points="8,80 20,20 32,20 20,80" fill="#8B83D4"/>
+  <!-- Strip 2 (middle-left) -->
+  <polygon points="28,80 40,20 52,20 40,80" fill="#7B73C9"/>
+  <!-- Strip 3 (middle-right, shorter - creates W dip) -->
+  <polygon points="44,80 50,48 62,48 56,80" fill="#9088D8"/>
+  <!-- Strip 4 (right) -->
+  <polygon points="58,80 70,20 82,20 70,80" fill="#7B73C9"/>
+</svg>
